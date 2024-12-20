@@ -1,0 +1,36 @@
+﻿@model Web_lab_13.Models.QuizModel
+@{
+    ViewData["Title"] = "Hello quiz";
+}
+
+<h1>Quiz</h1>
+
+<form asp-action="Next" method="post">
+    @for (int i = 0; i < Model.Questions.Count; i++)
+    {
+        if (i == Model.CurrentQuestionIndex)
+        {
+            <div>
+                <h3>@Model.Questions[i].QuestionText</h3>
+                <input style="margin-bottom:10px" type="number" asp-for="@Model.SelectedAnswer" value=""/>
+                <span asp-validation-for="@Model.SelectedAnswer" class="text-danger"></span>
+            </div>
+        }
+
+    }
+
+    <input type="hidden" asp-for="CurrentQuestionIndex" />
+    <!-- Скрытое поле для сериализованной модели -->
+    <input type="hidden" name="SerializedModel" value="@Newtonsoft.Json.JsonConvert.SerializeObject(Model)" />
+    <div>
+        <button type="submit" asp-action="Next">Next</button>
+        <button type="submit" asp-action="Finish">Finish</button>
+    </div>
+
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,20 @@
+﻿@model Web_lab_13.Models.QuizModel
+@{
+    ViewData["Title"] = "Hello quiz";
+    int i = 1;
+    int rightAnsertsCount = 0;
+    foreach (var question in Model.Questions)
+    {
+        if (question.SelectedAnswer == question.CorrectAnswer.ToString()) {
+            rightAnsertsCount++;
+        }
+    }
+}
+
+<h1>Quiz Results</h1>
+<h2 style="margin-bottom:20px">Right answers @rightAnsertsCount of @Model.Questions.Count</h2>
+@foreach (var question in Model.Questions)
+{
+    <p style="margin-left:30px; margin-bottom:2px;">@i. @question.QuestionText @question.SelectedAnswer</p>
+    i++;
+}
